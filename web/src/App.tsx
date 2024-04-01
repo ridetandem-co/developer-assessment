@@ -34,6 +34,8 @@ const App: React.FC = () => {
     fetchBusTimes();
   }, []); // Empty dependency array - ensures run once only
 
+  // Need to set up interval to increment remaining time every 10 seconds
+
   return (
     <div className="App">
       <div>
@@ -48,7 +50,11 @@ const App: React.FC = () => {
               </div>
               <div className="Card__Details">
                 <div>To {bus.destination}</div>
-                <div>{bus.minutesUntilArrival} mins</div>
+                <div>
+                  {bus.minutesUntilArrival <= 1
+                    ? "Due"
+                    : `${bus.minutesUntilArrival} mins`}
+                </div>
               </div>
             </div>
           ))}
