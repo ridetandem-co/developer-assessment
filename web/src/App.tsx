@@ -15,20 +15,19 @@ const App: React.FC = () => {
       try {
         const response = await fetch("http://localhost:3000/bus-times");
         if (!response.ok) {
-          throw new Error("Failed to fetch bus times from API");
+          throw new Error("Failed to fetch bus times");
         }
 
         const data = await response.json();
-        setBusTimes(data);
+
+        setBusTimes(data.slice(0, 5)); // Limit to a maximum of 5 buses
       } catch (error) {
         console.error(error);
       }
     };
 
-    fetchBusTimes();
-
-    const intervalId = setInterval(fetchBusTimes, 10000); // Interval to increment remaining time every 10 seconds
-  }, []); // Empty dependency array - ensures run once only
+    fetchBusTimes(); // Fetch bus times initially
+  }, []); // Empty dependency array ensures this effect runs only once on component mount
 
   const sortedBusTimes = [...busTimes].sort(
     (a, b) => a.minutesUntilArrival - b.minutesUntilArrival
