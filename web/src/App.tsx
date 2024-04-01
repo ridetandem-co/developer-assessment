@@ -13,20 +13,26 @@ const App: React.FC = () => {
   useEffect(() => {
     const fetchBusTimes = async () => {
       try {
-        const response = await fetch("https://localhost:3000/bus-times");
+        const response = await fetch("http://localhost:3000/bus-times");
         if (!response.ok) {
           throw new Error("Failed to fetch bus times from API");
         }
 
         const data = await response.json();
-        setBusTimes(data);
+
+        // Sort bus times in chronological order
+        const sortedBusTimes = data.sort(
+          (a: BusTime, b: BusTime) =>
+            a.minutesUntilArrival - b.minutesUntilArrival
+        );
+        setBusTimes(sortedBusTimes);
       } catch (error) {
         console.error(error);
       }
     };
 
     fetchBusTimes();
-  }, []);
+  }, []); // Empty dependency array - ensures run once only
 
   return (
     <div className="App">
