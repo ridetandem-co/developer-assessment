@@ -19,13 +19,7 @@ const App: React.FC = () => {
         }
 
         const data = await response.json();
-
-        // Sort bus times in chronological order
-        const sortedBusTimes = data.sort(
-          (a: BusTime, b: BusTime) =>
-            a.minutesUntilArrival - b.minutesUntilArrival
-        );
-        setBusTimes(sortedBusTimes);
+        setBusTimes(data);
       } catch (error) {
         console.error(error);
       }
@@ -36,6 +30,10 @@ const App: React.FC = () => {
     const intervalId = setInterval(fetchBusTimes, 10000); // Interval to increment remaining time every 10 seconds
   }, []); // Empty dependency array - ensures run once only
 
+  const sortedBusTimes = [...busTimes].sort(
+    (a, b) => a.minutesUntilArrival - b.minutesUntilArrival
+  );
+
   return (
     <div className="App">
       <div>
@@ -43,7 +41,7 @@ const App: React.FC = () => {
           Live bus times for <b>Park Road</b>
         </div>
         <div className="Card">
-          {busTimes.map((bus) => (
+          {sortedBusTimes.map((bus) => (
             <div className="Card__Item" key={bus.id}>
               <div className="Card__Header">
                 <b>{bus.busId}</b>
