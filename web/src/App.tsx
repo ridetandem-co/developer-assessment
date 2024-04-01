@@ -6,6 +6,7 @@ interface BusTime {
   busId: number;
   destination: string;
   minutesUntilArrival: number;
+  nonOperationalDays?: number[];
 }
 
 const App: React.FC = () => {
@@ -19,7 +20,17 @@ const App: React.FC = () => {
           throw new Error("Failed to fetch bus times");
         }
         const data = await response.json();
-        setBusTimes(data); // Set bus times fetched from the API
+
+        const currentDayOfWeek = new Date().getDay(); // Get current day of the week
+
+        // Filter bus times to only include routes operational on the current day of the week
+        const filteredBusTimes = data.filter((bus: BusTime) =>
+          bus.nonOperationalDays
+            ? !bus.nonOperationalDays.includes(currentDayOfWeek)
+            : true
+        );
+
+        setBusTimes(filteredBusTimes); // Set filtered bus times fetched from the API
       } catch (error) {
         console.error(error);
       }
