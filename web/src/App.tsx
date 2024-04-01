@@ -27,7 +27,34 @@ const App: React.FC = () => {
     };
 
     fetchBusTimes(); // Fetch bus times initially
+
+    // Set up interval to increment remaining time every 10 seconds
+    const intervalId = setInterval(() => {
+      setBusTimes((prevBusTimes) =>
+        prevBusTimes.map((bus) => ({
+          ...bus,
+          minutesUntilArrival: bus.minutesUntilArrival + 1,
+        }))
+      );
+    }, 10000);
+
+    return () => clearInterval(intervalId); // Function to clear interval when component unmounts
   }, []); // Empty dependency array ensures this effect runs only once on component mount
+
+  // Need to use the Fetched data to update the bus times
+
+  const fetchNewBuses = async (count: number): Promise<BusTime[]> => {
+    try {
+      const response = await fetch(`http://localhost:3000/bus-times`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch new buses");
+      }
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
 
   const sortedBusTimes = [...busTimes].sort(
     (a, b) => a.minutesUntilArrival - b.minutesUntilArrival
