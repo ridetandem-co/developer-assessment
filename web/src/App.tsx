@@ -19,6 +19,7 @@ const App: React.FC = () => {
         }
 
         const data = await response.json();
+        setBusTimes(data);
       } catch (error) {
         console.error(error);
       }
