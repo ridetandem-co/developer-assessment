@@ -32,9 +32,9 @@ const App: React.FC = () => {
     };
 
     fetchBusTimes();
-  }, []); // Empty dependency array - ensures run once only
 
-  // Need to set up interval to increment remaining time every 10 seconds
+    const intervalId = setInterval(fetchBusTimes, 10000); // Interval to increment remaining time every 10 seconds
+  }, []); // Empty dependency array - ensures run once only
 
   return (
     <div className="App">
