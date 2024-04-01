@@ -41,7 +41,25 @@ const App: React.FC = () => {
     return () => clearInterval(intervalId); // Function to clear interval when component unmounts
   }, []); // Empty dependency array ensures this effect runs only once on component mount
 
-  // Need to use the Fetched data to update the bus times
+  // Update Bus Times with Fetched Data
+  useEffect(() => {
+    const updateBusTimes = async () => {
+      setBusTimes((prevBusTimes) => {
+        // Filter out buses with arrival time greater than 0
+        const updatedBusTimes = prevBusTimes
+          .map((bus) => ({
+            ...bus,
+            minutesUntilArrival: Math.max(0, bus.minutesUntilArrival - 1),
+          }))
+          .filter((bus) => bus.minutesUntilArrival > 0);
+        return updatedBusTimes;
+      });
+    };
+
+    const intervalId = setInterval(updateBusTimes, 5000);
+
+    return () => clearInterval(intervalId);
+  }, []);
 
   const fetchNewBuses = async (count: number): Promise<BusTime[]> => {
     try {
