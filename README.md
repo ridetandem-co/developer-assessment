@@ -20,6 +20,8 @@ API - Node.js TypeScript application accessible at http://localhost:3000. Genera
 - The user should only see routes that run on the current day of the week
 - The app should match the design outlined in the mockup below
 
+The app should have appropriate frontend unit tests.
+
 Additionally, what are some other ways you might want to improve or extend this application? This could include changes to the user experience, front-end and/or back-end. Feel free to leave comments or implement these changes if you have time.
 
 **Mockup**
