@@ -1,4 +1,4 @@
-# Tandem Technical Test
+# RideTandem Technical Test
 
 Welcome!
 
@@ -8,7 +8,7 @@ Once you are finished working, please email tech@ridetandem.co with your finishe
 
 **Project structure**
 
-Web - React TypeScript application accessible at http://localhost:8080. Generated with Vite (similar to Create React App). In the web folder, install the packages and run `yarn dev`  to run this.
+Web - React TypeScript application accessible at http://localhost:8080. Generated with Vite (similar to Create React App). In the web folder, install the packages and run `yarn dev` to run this.
 
 API - Node.js TypeScript application accessible at http://localhost:3000. Generated with Nest.JS framework (similar to Express.js). In the api folder, install the packages and run `yarn dev` to run this.
 
